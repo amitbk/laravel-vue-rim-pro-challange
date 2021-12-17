@@ -28,7 +28,7 @@
       "@nuxt/types",
       "@nuxtjs/axios",
       "@nuxtjs/auth-next",
-      "nuxt-tailvue",
+      "nuxt-tailvue"
     ]
   },
   "exclude": [

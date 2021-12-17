@@ -3,6 +3,42 @@
     <div class="m-8 flex items-center justify-center">
       <Logo />
     </div>
+
+    
+
+
+    <div class="container">
+    
+      <div class="grid grid-cols-1 2xl:grid-cols-2 ">
+        
+        <div class="grid grid-cols-1 gap-6 bg-gray-100 rounded w-full p-2">
+        
+          <div>
+            <intro/>
+            <div class="grid grid-cols-1 gap-6 bg-gray-100 rounded w-full sm:grid-cols-2 lg:grid-cols-2">
+              <div>
+                <skill-card title="Skills"/>
+              </div>
+              <div>
+                <skill-card title="Interests"/>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        
+
+        
+
+        <!-- experience -->
+        <experience-wrapper/>
+
+      </div>
+    </div>
+
+    
+
     <ul v-if="users.length === 0" class="grid grid-cols-1 gap-6 bg-gray-100 rounded p-8 w-full sm:grid-cols-2 lg:grid-cols-3">
       <contact-card-skeleton v-for="i in 9" :key="`skel-${i}`" />
     </ul>
@@ -44,7 +80,12 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Users } from '@/types/api'
+import ExperienceCard from '../components/experience/ExperienceCard.vue'
+import ExperienceWrapper from '../components/experience/ExperienceWrapper.vue'
+import SkillCard from '../components/skills/SkillCard.vue'
+import Intro from '../components/Intro.vue'
 export default Vue.extend({
+  components: { ExperienceCard, ExperienceWrapper, SkillCard, Intro },
   data () {
     const users:Users = []
     const count:number = 9

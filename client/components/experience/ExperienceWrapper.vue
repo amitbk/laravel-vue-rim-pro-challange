@@ -51,9 +51,7 @@ export default Vue.extend({
   mounted () {
     this.get(this.count)
 
-    this.$nuxt.$on('experienceAdd', (experience: Experience) => {
-      console.log("EVENT WORKS ");
-
+    this.$nuxt.$on('experience-added', (experience: Experience) => {
       if( this.editIndex != null)
         Vue.set(this.experiences, this.editIndex, experience)
       else
@@ -63,10 +61,9 @@ export default Vue.extend({
       this.experience = {};
    })
   },
-  beforeDestroy() {
-    this.$nuxt.$off('experienceAdd');
-  },
+  
   methods: {
+    
     // fetch initial data
     async get (count: number): Promise<void> {
       await this.$sleep(2000)
@@ -88,6 +85,9 @@ export default Vue.extend({
       })
     }
 
+  },
+  beforeDestroy() {
+    this.$nuxt.$off('experience-added');
   },
 
 })

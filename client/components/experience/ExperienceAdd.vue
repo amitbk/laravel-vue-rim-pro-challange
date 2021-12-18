@@ -69,7 +69,7 @@ export default Vue.extend({
       // decide to create or to update
       let url = !!this.experience.id ? "experiences/"+this.experience.id : "experiences";
       this.$axios.post(url, this.experience).then((res: { data: { data: any } }): void => {
-        this.$nuxt.$emit('experienceAdd', res.data.data as Experience)
+        this.$nuxt.$emit('experience-added', res.data.data as Experience)
         this.experience = this.initExperience();
       })
       

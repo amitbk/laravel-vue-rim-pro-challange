@@ -21,7 +21,7 @@
 
     </div>
       <ul v-if="experiences.length === 0 && loading" class="grid grid-cols-1 gap-6 rounded w-full sm:grid-cols-2 lg:grid-cols-2">
-        <experience-skeleton v-for="i in 9" :key="`skel-${i}`" />
+        <experience-skeleton v-for="i in 2" :key="`skel-${i}`" />
       </ul>
       <ul v-if="experiences.length &gt; 0" class="grid grid-cols-1 gap-6 rounded w-full sm:grid-cols-2 lg:grid-cols-2">
         <experience-card v-for="(experience, index) in experiences" :key="index" :experience="experience"

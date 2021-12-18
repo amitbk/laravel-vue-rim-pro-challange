@@ -5,15 +5,21 @@
       <span class="bg-gray-700 text-white cursor-pointer rounded p-2"  @click="showModal = true">Add New</span>
 
       <modal title="Add Experience" :showModal="showModal">
-        <experience-add @toggle-modal="showModal = !showModal"/>
+        <experience-add
+          :experienceEdit="experience"
+          @toggle-modal="showModal = !showModal"
+          />
       </modal>
 
     </div>
-    <ul v-if="users.length === 0" class="grid grid-cols-1 gap-6 bg-gray-100 rounded w-full sm:grid-cols-2 lg:grid-cols-2">
+    <ul v-if="experiences.length === 0" class="grid grid-cols-1 gap-6 bg-gray-100 rounded w-full sm:grid-cols-2 lg:grid-cols-2">
         <experience-skeleton v-for="i in 9" :key="`skel-${i}`" />
       </ul>
-      <ul v-if="users.length &gt; 0" class="grid grid-cols-1 gap-6 bg-gray-100 rounded w-full sm:grid-cols-2 lg:grid-cols-2">
-        <experience-card v-for="(user, index) in users" :key="index" :user="user" />
+      <ul v-if="experiences.length &gt; 0" class="grid grid-cols-1 gap-6 bg-gray-100 rounded w-full sm:grid-cols-2 lg:grid-cols-2">
+        <experience-card v-for="(experience, index) in experiences" :key="index" :experience="experience"
+          @edit="onEditClick(index, experience)"
+          @delete="onDeleteClick(index, experience)"
+        />
     </ul>
   </div>
 </template>
@@ -21,39 +27,67 @@
 <script lang="ts">
 import { PropType } from '@nuxtjs/composition-api'
 import Vue from 'vue'
-import { User } from '@/client/types/api'
-import { Users } from '@/types/api'
+import { Experience } from '@/client/types/api'
+import { Experiences } from '@/types/api'
 import Modal from '../widgets/Modal.vue'
 import ExperienceAdd from './ExperienceAdd.vue'
 
 export default Vue.extend({
   components: { Modal, ExperienceAdd },
   data () {
-    const users:Users = []
+    let experiences:Experiences = []
+    let experience:Experience = {}
+    let editIndex:Number = null
     const count:number = 8
 
     return {
-      users,
+      experiences,
+      experience,
+      editIndex,
       count,
-      showModal: true
+      showModal: false,
     }
   },
   mounted () {
     this.get(this.count)
-    console.log('test')
+
+    this.$nuxt.$on('experienceAdd', (experience: Experience) => {
+      console.log("EVENT WORKS ");
+
+      if( this.editIndex != null)
+        Vue.set(this.experiences, this.editIndex, experience)
+      else
+        this.experiences.push(experience);
+
+      this.editIndex = null;
+      this.experience = {};
+   })
+  },
+  beforeDestroy() {
+    this.$nuxt.$off('experienceAdd');
   },
   methods: {
+    // fetch initial data
     async get (count: number): Promise<void> {
       await this.$sleep(2000)
-      this.users = (
-        await this.$axios.get('example', { params: { count } })
-      ).data.data as Users
+      this.experiences = (
+        await this.$axios.get('experiences')
+      ).data.data as Experiences
     },
-    total (count: number): void {
-      this.users = []
-      this.count = count
-      this.get(this.count)
+
+    onEditClick(index: Number, experience: Experience) {
+      this.editIndex = index;
+      this.experience = experience;
+      this.showModal = true;
     },
+
+    onDeleteClick(index: Number, experience: Experience) {
+      console.log(index);
+      this.$axios.delete('experiences/'+experience.id ).then((res: any) => {
+        this.experiences.splice(index, 1);
+      })
+    }
+
   },
 
 })

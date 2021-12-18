@@ -1,14 +1,14 @@
 <template>
   <div class="grid grid-cols-1 gap-6 bg-gray-100 rounded w-full sm:grid-cols-2 lg:grid-cols-2">
     <div>
-        <tag-card :tags="getSkills" :tagType="tagTypes[1]"
+        <tag-card :tags="getSkills" :tagType="tagTypes[1]" :loading="loading"
             @tag-add="onTagAdd"
             @tag-edit="onTagEdit"
             @tag-delete="onTagDelete"
         />
     </div>
     <div>
-        <tag-card :tags="getExperiences" :tagType="tagTypes[2]"
+        <tag-card :tags="getExperiences" :tagType="tagTypes[2]" :loading="loading"
             @tag-add="onTagAdd"
             @tag-edit="onTagEdit"
             @tag-delete="onTagDelete"
@@ -33,6 +33,7 @@ import { Tags } from '@/types/api'
 import Modal from '../widgets/Modal.vue'
 import TagCard from "./TagCard.vue"
 import TagAdd from "./TagAdd.vue"
+import { deleteConfirmModal } from "../../utils"
 
 export default Vue.extend({
   components: { Modal, TagCard, TagAdd },
@@ -55,7 +56,8 @@ export default Vue.extend({
       count,
       showModal: false,
       tagTypes,
-      selectedTagTypeId
+      selectedTagTypeId,
+      loading: false
     }
   },
   computed: {
@@ -71,7 +73,10 @@ export default Vue.extend({
       },
   },
   mounted () {
-    this.get(this.count)
+    this.loading = true
+    this.get().then(() => {
+        this.loading = false
+    })
 
     this.$nuxt.$on('tag-added', (tag: Tag) => {
       if( this.editIndex != null)
@@ -90,7 +95,7 @@ export default Vue.extend({
         this.showModal = true;
     },
     // fetch initial data
-    async get (count: number): Promise<void> {
+    async get (): Promise<void> {
       await this.$sleep(2000)
       this.tags = (
         await this.$axios.get('tags')
@@ -105,10 +110,14 @@ export default Vue.extend({
     },
 
     onTagDelete(data: any) {
-      this.$axios.delete('tags/'+data.tag.id ).then((res: any) => {
-        let index = this.tags.findIndex(e => e.id === data.tag.id)
-        this.tags.splice(index, 1);
-      })
+      deleteConfirmModal( this, () => {
+
+          this.$axios.delete('tags/'+data.tag.id ).then((res: any) => {
+                let index = this.tags.findIndex(e => e.id === data.tag.id)
+                this.tags.splice(index, 1);
+                this.$toast.success( this.tagTypes[data.tag.tag_type_id].title + ' deleted.')
+            })
+        })
     }
 
   },

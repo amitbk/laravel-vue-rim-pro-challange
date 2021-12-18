@@ -78,6 +78,9 @@ export default Vue.extend({
                           .then((res: { data: { data: any } }): void => {
                             self.$nuxt.$emit('experience-added', res.data.data as Experience)
                             self.experience = self.initExperience();
+
+                            this.$toast.success('New experience added.')
+
                             resolve(res)
                           }).catch((err) => {
                             console.log(err.response.data.errors)

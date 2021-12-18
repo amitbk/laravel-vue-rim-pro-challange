@@ -20,6 +20,8 @@
             <icon-edit @click.native="onEditClick(index, tag)" class="bg-sky-50 hover:bg-sky-100 px-2 h-full cursor-pointer w-8 h-8 " />
             <icon-trash @click.native="onDeleteClick(index, tag)" class="bg-sky-50 hover:bg-sky-100 px-2 h-full cursor-pointer w-8 h-8 " />
         </div>
+
+        <tag-card-skeleton v-if="tags.length == 0 && loading == true"/>
         
     </div>
   </div>
@@ -31,8 +33,9 @@ import Vue from 'vue'
 import { Tags } from '@/client/types/api'
 import { Tag } from '@/client/types/api'
 import TagAdd from './TagAdd.vue'
+import TagCardSkeleton from './TagCardSkeleton.vue'
 export default Vue.extend({
-  components: { TagAdd },
+  components: { TagAdd, TagCardSkeleton },
   data() {
     return {
       showModal: false,
@@ -45,6 +48,10 @@ export default Vue.extend({
     },
     tags: {
       type: Array as PropType<Tags>,
+      required: true,
+    },
+    loading: {
+      type: Boolean,
       required: true,
     },
   },

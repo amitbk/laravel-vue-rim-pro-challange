@@ -20,7 +20,7 @@
       </modal>
 
     </div>
-    <ul v-if="experiences.length === 0" class="grid grid-cols-1 gap-6 rounded w-full sm:grid-cols-2 lg:grid-cols-2">
+      <ul v-if="experiences.length === 0 && loading" class="grid grid-cols-1 gap-6 rounded w-full sm:grid-cols-2 lg:grid-cols-2">
         <experience-skeleton v-for="i in 9" :key="`skel-${i}`" />
       </ul>
       <ul v-if="experiences.length &gt; 0" class="grid grid-cols-1 gap-6 rounded w-full sm:grid-cols-2 lg:grid-cols-2">
@@ -41,6 +41,7 @@ import { Experience } from '@/client/types/api'
 import { Experiences } from '@/types/api'
 import Modal from '../widgets/Modal.vue'
 import ExperienceAdd from './ExperienceAdd.vue'
+import { deleteConfirmModal } from "../../utils"
 
 export default Vue.extend({
   components: { Modal, ExperienceAdd },
@@ -48,7 +49,7 @@ export default Vue.extend({
     let experiences:Experiences = []
     let experience:Experience = {}
     let editIndex:Number = null
-    const count:number = 8
+    const count:number = 2
 
     return {
       experiences,
@@ -56,10 +57,14 @@ export default Vue.extend({
       editIndex,
       count,
       showModal: false,
+      loading: false
     }
   },
   mounted () {
-    this.get(this.count)
+    this.loading = true
+    this.get().then(() => {
+      this.loading = false
+    })
 
     this.$nuxt.$on('experience-added', (experience: Experience) => {
       if( this.editIndex != null)
@@ -75,7 +80,7 @@ export default Vue.extend({
   methods: {
     
     // fetch initial data
-    async get (count: number): Promise<void> {
+    async get (): Promise<void> {
       await this.$sleep(2000)
       this.experiences = (
         await this.$axios.get('experiences')
@@ -89,9 +94,14 @@ export default Vue.extend({
     },
 
     onDeleteClick(index: Number, experience: Experience) {
-      console.log(index);
-      this.$axios.delete('experiences/'+experience.id ).then((res: any) => {
-        this.experiences.splice(index, 1);
+   
+      deleteConfirmModal( this, () => {
+
+        this.$axios.delete('experiences/'+experience.id ).then((res: any) => {
+          this.experiences.splice(index, 1);
+          this.$toast.success('Experience deleted.')
+        })
+
       })
     }
 

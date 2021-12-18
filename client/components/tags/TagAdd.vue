@@ -67,6 +67,8 @@ export default Vue.extend({
                           .then((res: { data: { data: any } }): void => {
                             self.$nuxt.$emit('tag-added', res.data.data as Tag)
                             self.tag = self.initTag();
+                            self.$toast.success('New '+self.tagType.title+' added.')
+
                             resolve(res)
                           }).catch((err) => {
                             self.errors = err.response.data.errors;

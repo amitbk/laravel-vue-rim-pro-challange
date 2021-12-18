@@ -44,8 +44,8 @@ export default Vue.extend({
     const selectedTagTypeId:Number = 0
     const tagTypes:Object = [
                             {},
-                            {title: "Skills", index: 0},                
-                            {title: "Interests", index: 1},                
+                            {title: "Skills", index: 1},                
+                            {title: "Interests", index: 2},                
                         ]
 
     return {

@@ -12,7 +12,7 @@
       </div>
         
 
-      <modal title="Add Experience" :showModal="showModal">
+      <modal title="🚀 Add Your Past Experiences" :showModal="showModal">
         <experience-add
           :experienceEdit="experience"
           @toggle-modal="showModal = !showModal"

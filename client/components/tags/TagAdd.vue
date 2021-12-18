@@ -10,6 +10,10 @@
         <input v-model="tag.title" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" :id="tagType.title" type="text" :placeholder="tagType.title">
       </div>
 
+      <div v-if="!!errors">
+        <div v-for="(err, index) in errors" :key="index" class="text-red-700">{{ err.detail }} </div>
+      </div>
+
     </div>
 
     <!--footer-->
@@ -38,8 +42,11 @@ export default Vue.extend({
   },
   data() {
     const tag:Tag = {}
+    const errors:Object = {}
+
     return {
-      tag
+      tag,
+      errors
     }
   },
   mounted() {
@@ -47,17 +54,26 @@ export default Vue.extend({
   },
 
   methods: {
+
     saveAction: function() {
       console.log("Save clicked");
 
-      // decide to create or to update
+      let self = this;
+      this.tag.tag_type_id = this.tagType.index;
       let url = !!this.tag.id ? "tags/"+this.tag.id : "tags";
-      this.tag.tag_type_id = this.tagType.index+1;
-      this.$axios.post(url, this.tag).then((res: { data: { data: any } }): void => {
-        this.$nuxt.$emit('tag-added', res.data.data as Tag)
-        this.tag = this.initTag();
-      })
-
+      return new Promise((resolve, reject) => {
+        // decide to create or to update
+        this.$axios.post(url, this.tag)
+                          .then((res: { data: { data: any } }): void => {
+                            self.$nuxt.$emit('tag-added', res.data.data as Tag)
+                            self.tag = self.initTag();
+                            resolve(res)
+                          }).catch((err) => {
+                            self.errors = err.response.data.errors;
+                            reject(err)
+                          })
+        });
+      
     },
 
     initTag: function() {

@@ -8,6 +8,7 @@
           Company Name
         </label>
         <input v-model="experience.company" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="company_name" type="text" placeholder="Company name">
+        <span v-if="!!errors.company" class="text-red-700">{{ errors.company[0] }}</span>
       </div>
 
       <div class="mb-4">
@@ -55,8 +56,11 @@ export default Vue.extend({
   },
   data() {
     const experience:Experience = {}
+    const errors:Object = {}
+
     return {
-      experience
+      experience,
+      errors
     }
   },
   mounted() {
@@ -66,12 +70,21 @@ export default Vue.extend({
     saveAction: function() {
       console.log("Save clicked");
 
-      // decide to create or to update
-      let url = !!this.experience.id ? "experiences/"+this.experience.id : "experiences";
-      this.$axios.post(url, this.experience).then((res: { data: { data: any } }): void => {
-        this.$nuxt.$emit('experience-added', res.data.data as Experience)
-        this.experience = this.initExperience();
-      })
+      let self = this;
+      return new Promise((resolve, reject) => {
+        // decide to create or to update
+        let url = !!this.experience.id ? "experiences/"+this.experience.id : "experiences";
+        this.$axios.post(url, this.experience)
+                          .then((res: { data: { data: any } }): void => {
+                            self.$nuxt.$emit('experience-added', res.data.data as Experience)
+                            self.experience = self.initExperience();
+                            resolve(res)
+                          }).catch((err) => {
+                            console.log(err.response.data.errors)
+                            self.errors = err.response.data.errors;
+                            reject(err)
+                          })
+        });
       
     },
 

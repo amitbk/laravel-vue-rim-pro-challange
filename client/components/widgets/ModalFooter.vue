@@ -22,8 +22,9 @@ export default {
   methods: {
     onSaveClick() {
 
-        this.saveAction();
-        this.toggleModal();
+        this.saveAction().then(()=> {
+          this.toggleModal();
+        })
 
     },
     toggleModal() {

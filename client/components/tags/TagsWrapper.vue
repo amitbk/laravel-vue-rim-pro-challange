@@ -1,14 +1,14 @@
 <template>
   <div class="grid grid-cols-1 gap-6 bg-gray-100 rounded w-full sm:grid-cols-2 lg:grid-cols-2">
     <div>
-        <tag-card :tags="getSkills" :tagType="tagTypes[0]"
+        <tag-card :tags="getSkills" :tagType="tagTypes[1]"
             @tag-add="onTagAdd"
             @tag-edit="onTagEdit"
             @tag-delete="onTagDelete"
         />
     </div>
     <div>
-        <tag-card :tags="getExperiences" :tagType="tagTypes[1]"
+        <tag-card :tags="getExperiences" :tagType="tagTypes[2]"
             @tag-add="onTagAdd"
             @tag-edit="onTagEdit"
             @tag-delete="onTagDelete"
@@ -43,6 +43,7 @@ export default Vue.extend({
     const count:number = 8
     const selectedTagTypeId:Number = 0
     const tagTypes:Object = [
+                            {},
                             {title: "Skills", index: 0},                
                             {title: "Interests", index: 1},                
                         ]
@@ -97,7 +98,9 @@ export default Vue.extend({
     },
 
     onTagEdit(data: any) {
+      this.editIndex = this.tags.findIndex(e => e.id === data.tag.id)
       this.tag = data.tag;
+      this.selectedTagTypeId = data.tag.tag_type_id;
       this.showModal = true;
     },
 

@@ -9,9 +9,9 @@
 
     <div class="container">
     
-      <div class="grid grid-cols-1 2xl:grid-cols-2 ">
+      <div class="grid grid-cols-1 gap-5 2xl:grid-cols-2 ">
         
-        <div class="grid grid-cols-1 gap-6 bg-gray-100 rounded w-full p-2">
+        <div class="grid grid-cols-1 bg-gray-100 rounded w-full">
         
           <div>
             <intro/>

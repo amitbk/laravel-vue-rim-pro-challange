@@ -5,6 +5,7 @@
 ** Default: https://github.com/tailwindcss/tailwindcss/blob/master/stubs/defaultConfig.stub.js
 */
 const defaultTheme = require('tailwindcss/defaultTheme')
+const colors = require('tailwindcss/colors')
 
 module.exports = {
   variants: {
@@ -16,6 +17,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        ...colors
       },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],

@@ -1,8 +1,16 @@
 <template>
-  <div class="container p-2">
-    <div class="p-2 mb-1">
-      <span class="text-2xl">Experience</span>
-      <span class="bg-gray-700 text-white cursor-pointer rounded p-2"  @click="showModal = true">Add New</span>
+  <div class="container">
+    <div class="bg-teal-50 p-2 shadow rounded">
+
+    <div class="mb-1">
+
+      <div class="w-full flex py-3">
+          <span class="flex-1 text-2xl">Experience</span>
+          <PushButton @click="showModal = true" class="" theme="indigo">
+            Add New
+          </PushButton>
+      </div>
+        
 
       <modal title="Add Experience" :showModal="showModal">
         <experience-add
@@ -12,15 +20,17 @@
       </modal>
 
     </div>
-    <ul v-if="experiences.length === 0" class="grid grid-cols-1 gap-6 bg-gray-100 rounded w-full sm:grid-cols-2 lg:grid-cols-2">
+    <ul v-if="experiences.length === 0" class="grid grid-cols-1 gap-6 rounded w-full sm:grid-cols-2 lg:grid-cols-2">
         <experience-skeleton v-for="i in 9" :key="`skel-${i}`" />
       </ul>
-      <ul v-if="experiences.length &gt; 0" class="grid grid-cols-1 gap-6 bg-gray-100 rounded w-full sm:grid-cols-2 lg:grid-cols-2">
+      <ul v-if="experiences.length &gt; 0" class="grid grid-cols-1 gap-6 rounded w-full sm:grid-cols-2 lg:grid-cols-2">
         <experience-card v-for="(experience, index) in experiences" :key="index" :experience="experience"
           @edit="onEditClick(index, experience)"
           @delete="onDeleteClick(index, experience)"
         />
     </ul>
+    </div>
+
   </div>
 </template>
 

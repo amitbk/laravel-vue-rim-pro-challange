@@ -1,23 +1,26 @@
 <template>
   <div>
-    <div class="p-2">
-      
-      <span class="text-2xl">{{ tagType.title }}</span>
-      <span class="bg-gray-700 text-white cursor-pointer rounded p-2"  @click="onTagAdd">Add New</span>
-
-    </div>
-    <div class="col-span-1 bg-white rounded-lg shadow">
-      <div class="w-full flex p-6 space-x-2">
+    <div class="grid grid-cols-1 gap-3 bg-white rounded-lg shadow p-3 mt-2">
         
-        <span v-for="(tag,index) in tags" class="bg-gray-200 p-2 rounded" :key="index">
-          <div class="flex">
-            {{tag.title}}
-            <icon-edit @click.native="onEditClick(index, tag)" class="cursor-pointer w-5 h-5 mx-1" />
-            <icon-trash @click.native="onDeleteClick(index, tag)" class="cursor-pointer w-5 h-5 mx-1" />
-          </div>
-        </span>
+        <div class="w-full flex">
+      
+          <span class="flex-1 text-2xl">{{ tagType.title }}</span>
 
-      </div>
+          <PushButton @click="onTagAdd" class="" theme="indigo">
+            Add New
+          </PushButton>
+
+
+        </div>
+
+        <div v-for="(tag,index) in tags" class="w-full flex items-center justify-between bg-sky-100 rounded border-gray-600" :key="index">
+            <div class="flex-1 p-2">
+              {{tag.title}}
+            </div>
+            <icon-edit @click.native="onEditClick(index, tag)" class="bg-sky-50 hover:bg-sky-100 px-2 h-full cursor-pointer w-8 h-8 " />
+            <icon-trash @click.native="onDeleteClick(index, tag)" class="bg-sky-50 hover:bg-sky-100 px-2 h-full cursor-pointer w-8 h-8 " />
+        </div>
+        
     </div>
   </div>
 </template>

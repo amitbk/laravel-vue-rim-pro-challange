@@ -1,9 +1,7 @@
 <template>
-    <div>
-      <div class="p-2 text-2xl">
-        ⚡ I am Fullsatck developer!
-      </div>
-      <div class="col-span-1 bg-white rounded-lg shadow p-6">
+    <div class="mb-2">
+      
+      <div class="col-span-1 bg-teal-100 rounded-lg shadow p-6">
         <div class="text-2xl">
           Amit Kadam
         </div>

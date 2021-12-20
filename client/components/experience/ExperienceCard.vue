@@ -1,7 +1,6 @@
 <template>
   <li class="col-span-1 bg-white rounded-lg shadow">
     <div class="w-full flex items-center justify-between p-6 space-x-6">
-      <!-- <img class="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" :src="experience.avatar" alt="avatar"> -->
       <icon-fume class="w-10 h-10" />
 
       <div class="flex-1 truncate">
@@ -54,19 +53,16 @@
 </template>
 
 <script lang="ts">
-import { PropType } from '@nuxtjs/composition-api'
 import Vue from 'vue'
+
+import { PropType } from '@nuxtjs/composition-api'
 import { Experience } from '../../types/api'
+
 export default Vue.extend({
   props: {
     experience: {
       type: Object as PropType<Experience>,
       required: true,
-    },
-  },
-  computed: {
-    is_admin () {
-      return Math.random() >= 0.5
     },
   },
 })

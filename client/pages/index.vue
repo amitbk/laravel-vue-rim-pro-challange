@@ -12,6 +12,7 @@
             <intro/>
             <tags-wrapper/>
           </div>
+
         </div>
 
         <!-- experience -->
@@ -24,20 +25,11 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Users } from '@/types/api'
 import ExperienceCard from '../components/experience/ExperienceCard.vue'
 import ExperienceWrapper from '../components/experience/ExperienceWrapper.vue'
 import TagsWrapper from '../components/tags/TagsWrapper.vue'
 import Intro from '../components/Intro.vue'
 export default Vue.extend({
   components: { ExperienceCard, ExperienceWrapper, TagsWrapper, Intro },
- 
-  mounted () {
-    
-  },
-  methods: {
-    
-    
-  },
 })
 </script>

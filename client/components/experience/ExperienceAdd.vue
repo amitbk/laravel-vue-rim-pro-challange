@@ -66,6 +66,12 @@ export default Vue.extend({
       this.experience = !!this.experienceEdit ? {...this.experienceEdit} : this.initExperience() 
   },
   methods: {
+
+    /**
+     * on `Save` click,
+     * This will call an api to send data to server.
+     * Can: Create or update experience
+     */
     saveAction: function() {
       console.log("Save clicked");
 
@@ -75,14 +81,15 @@ export default Vue.extend({
         let url = !!this.experience.id ? "experiences/"+this.experience.id : "experiences";
         this.$axios.post(url, this.experience)
                           .then((res: { data: { data: any } }): void => {
+                            // emit event to update `experience` object to show on UI
                             self.$nuxt.$emit('experience-added', res.data.data as Experience)
+                            // reset form
                             self.experience = self.initExperience();
-
                             this.$toast.success('New experience added.')
 
                             resolve(res)
                           }).catch((err) => {
-                            console.log(err.response.data.errors)
+                            // set errors if any
                             self.errors = err.response.data.errors;
                             reject(err)
                           })

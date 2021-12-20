@@ -25,8 +25,9 @@
 <script lang="ts">
 import Vue from 'vue'
 import { PropType } from '@nuxtjs/composition-api'
-import ModalFooter from '../widgets/ModalFooter.vue'
 import { Tag } from '../../types/api'
+
+import ModalFooter from '../widgets/ModalFooter.vue'
 
 export default Vue.extend({
   components: { ModalFooter },
@@ -49,13 +50,19 @@ export default Vue.extend({
     }
   },
   mounted() {
-      this.tag = !!this.tagEdit ? {...this.tagEdit} : this.initTag() 
+    // Check if tag is selected to edit or initialize new tag
+    this.tag = !!this.tagEdit ? {...this.tagEdit} : this.initTag() 
   },
 
   methods: {
 
+    /**
+     * on `Save` click,
+     * This will call an api to send data to server.
+     * Can: Create or update tag
+     */
     saveAction: function() {
-      console.log("Save clicked");
+
 
       let self = this;
       this.tag.tag_type_id = this.tagType.index;
@@ -64,12 +71,14 @@ export default Vue.extend({
         // decide to create or to update
         this.$axios.post(url, this.tag)
                           .then((res: { data: { data: any } }): void => {
+                            // emit event to update `tags` object to show on UI
                             self.$nuxt.$emit('tag-added', res.data.data as Tag)
+                            // reset form
                             self.tag = self.initTag();
                             self.$toast.success('New '+self.tagType.title+' added.')
-
                             resolve(res)
                           }).catch((err) => {
+                            // set errors if any
                             self.errors = err.response.data.errors;
                             reject(err)
                           })

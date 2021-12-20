@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-1 gap-6 bg-gray-100 rounded w-full sm:grid-cols-2 lg:grid-cols-2">
+  <div class="grid grid-cols-1 gap-2 bg-gray-100 rounded w-full sm:grid-cols-2 lg:grid-cols-2">
     
     <!-- Skills -->
     <div>

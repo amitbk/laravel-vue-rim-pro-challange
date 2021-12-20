@@ -5,7 +5,9 @@
 </template>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
 html,body {
-  @apply bg-gray-100
+  @apply bg-gray-100;
+  font-family: 'Nunito', sans-serif;
 }
 </style>

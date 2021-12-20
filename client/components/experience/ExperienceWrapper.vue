@@ -4,7 +4,7 @@
 
       <div class="mb-1">
         <div class="w-full flex py-3">
-            <span class="flex-1 text-2xl">Experience</span>
+            <span class="flex-1 text-2xl">🚀 Experience</span>
             <PushButton @click="showModal = true" class="" theme="indigo">
               Add New
             </PushButton>

@@ -3,7 +3,7 @@
     <div class="grid grid-cols-1 gap-3 bg-white rounded-lg shadow p-3 mt-2">
         
         <div class="w-full flex">
-          <span class="flex-1 text-2xl">{{ tagType.title }}</span>
+          <span class="flex-1 text-2xl">🎨 {{ tagType.title }}</span>
           <PushButton @click="onTagAdd" class="" theme="indigo">
             Add New
           </PushButton>

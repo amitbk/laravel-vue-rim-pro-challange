@@ -43,7 +43,7 @@
 * clone from GitHub
 * run `yarn` and `composer install` to install all of your deps
 * copy `.env.example` to `.env` and configure it to your likings
-* TL;DR
+* Migrate the database (php artisan migrate)
  ```bash
 git clone git@github.com:Rimsys/laranuxt.git; cd laranuxt; yarn; composer install; cp .env.example .env;
  ```

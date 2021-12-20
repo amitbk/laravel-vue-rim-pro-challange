@@ -1,7 +1,6 @@
 <template>
   <div class="flex items-center">
-    <IconLaravel class="w-16 h-16 -mt-8" primary="text-red-500" />
-    <IconNuxt class="w-16 h-16 -ml-6 mt-8" />
+    <img class="rounded-full w-24 h-24" src="https://blogger.googleusercontent.com/img/a/AVvXsEgUWAr3xc5wkG8sWBsZL3D_YWyFMqh16nnyTbIiQUcMM1EUyjEOJZkiVCtr3iu1BkKIozgGvKvINfD32lZHlEKQGbfoZ406JelOZiEfaMf4fkFgZB0ea3O3-9NvrZH0qbtC7UvvPOGShzIPu9zyKXl_SVbp7KvAWuhLosX24gdPwgyEph_9FMQDyT1XPQ" alt="">
   </div>
 </template>
 

@@ -16,9 +16,7 @@
 </template>
 
 <script lang="ts">
-import { PropType } from '@nuxtjs/composition-api'
 import Vue from 'vue'
-import { User } from '@/client/types/api'
 export default Vue.extend({
 
 })

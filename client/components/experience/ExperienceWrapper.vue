@@ -37,8 +37,8 @@
 <script lang="ts">
 import { PropType } from '@nuxtjs/composition-api'
 import Vue from 'vue'
-import { Experience } from '@/client/types/api'
-import { Experiences } from '@/types/api'
+import { Experience } from '../../types/api'
+import { Experiences } from '../../types/api'
 import Modal from '../widgets/Modal.vue'
 import ExperienceAdd from './ExperienceAdd.vue'
 import { deleteConfirmModal } from "../../utils"
@@ -47,17 +47,15 @@ export default Vue.extend({
   components: { Modal, ExperienceAdd },
   data () {
     let experiences:Experiences = []
-    let experience:Experience = {}
-    let editIndex:Number = null
     const count:number = 2
 
     return {
       experiences,
-      experience,
-      editIndex,
+      experience: {} as Experience,
+      editIndex: null as number | null,
       count,
       showModal: false,
-      loading: false
+      loading: false as Boolean
     }
   },
   mounted () {
@@ -73,7 +71,7 @@ export default Vue.extend({
         this.experiences.push(experience);
 
       this.editIndex = null;
-      this.experience = {};
+      this.experience = {} as Experience;
    })
   },
   
@@ -87,13 +85,13 @@ export default Vue.extend({
       ).data.data as Experiences
     },
 
-    onEditClick(index: Number, experience: Experience) {
+    onEditClick(index: number, experience: Experience) {
       this.editIndex = index;
       this.experience = experience;
       this.showModal = true;
     },
 
-    onDeleteClick(index: Number, experience: Experience) {
+    onDeleteClick(index: number, experience: Experience) {
    
       deleteConfirmModal( this, () => {
 

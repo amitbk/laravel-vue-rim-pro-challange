@@ -26,7 +26,7 @@
 import Vue from 'vue'
 import { PropType } from '@nuxtjs/composition-api'
 import ModalFooter from '../widgets/ModalFooter.vue'
-import { Tag } from '@/types/api'
+import { Tag } from '../../types/api'
 
 export default Vue.extend({
   components: { ModalFooter },
@@ -41,11 +41,10 @@ export default Vue.extend({
     }
   },
   data() {
-    const tag:Tag = {}
     const errors:Object = {}
 
     return {
-      tag,
+      tag: {} as Tag,
       errors
     }
   },
@@ -79,10 +78,8 @@ export default Vue.extend({
     },
 
     initTag: function() {
-      return {
-        title: "",
-        tag_type_id: "",
-      }
+      let tag:Tag = {} as Tag;
+      return tag
     }
   }
 })

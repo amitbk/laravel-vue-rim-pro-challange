@@ -44,7 +44,7 @@
 import Vue from 'vue'
 import { PropType } from '@nuxtjs/composition-api'
 import ModalFooter from '../widgets/ModalFooter.vue'
-import { Experience } from '@/types/api'
+import { Experience } from '../../types/api'
 
 export default Vue.extend({
   components: { ModalFooter },
@@ -55,11 +55,10 @@ export default Vue.extend({
     }
   },
   data() {
-    const experience:Experience = {}
     const errors:Object = {}
 
     return {
-      experience,
+      experience: {} as Experience,
       errors
     }
   },
@@ -92,12 +91,8 @@ export default Vue.extend({
     },
 
     initExperience: function() {
-      return {
-        company: "",
-        role: "",
-        date_start: "",
-        date_end: ""
-      }
+      let experience = {} as Experience
+      return experience
     }
   }
 })

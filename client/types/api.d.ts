@@ -27,7 +27,7 @@ export interface User {
 }
 
 export interface Experience {
-  id: Number
+  id: number
   company: string
   role: string
   date_start: string
@@ -35,10 +35,16 @@ export interface Experience {
 }
 
 export interface Tag {
-  id: Number
+  id: number
+  title: string
+  tag_type_id: number
+}
+export interface TagType {
+  index: number
   title: string
 }
 
 export type Users = Array<User>
 export type Experiences = Array<Experience>
 export type Tags = Array<Tag>
+export type TagTypes = Array<TagType>

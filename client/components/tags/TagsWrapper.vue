@@ -28,8 +28,9 @@
 <script lang="ts">
 import { PropType } from '@nuxtjs/composition-api'
 import Vue from 'vue'
-import { Tag } from '@/client/types/api'
-import { Tags } from '@/types/api'
+import { Tag } from '../../types/api'
+import { Tags } from '../../types/api'
+import { TagTypes } from '../../types/api'
 import Modal from '../widgets/Modal.vue'
 import TagCard from "./TagCard.vue"
 import TagAdd from "./TagAdd.vue"
@@ -38,38 +39,35 @@ import { deleteConfirmModal } from "../../utils"
 export default Vue.extend({
   components: { Modal, TagCard, TagAdd },
   data () {
-    let tags:Tags = []
-    let tag:Tag = {}
-    let editIndex:Number = null
     const count:number = 8
-    const selectedTagTypeId:Number = 0
-    const tagTypes:Object = [
-                            {},
+    const tagTypes:TagTypes = [
+                            {title: "", index: 0},                
                             {title: "Skills", index: 1},                
                             {title: "Interests", index: 2},                
                         ]
+    const showModal:Boolean = false
 
     return {
-      tags,
-      tag,
-      editIndex,
+      tags: [] as Tags,
+      tag: {} as Tag,
+      editIndex: null as number | null,
       count,
-      showModal: false,
+      showModal,
       tagTypes,
-      selectedTagTypeId,
-      loading: false
+      selectedTagTypeId: 0 as number,
+      loading: false as Boolean
     }
   },
   computed: {
-      getModalTitle: function() {
-          return this.selectedTagTypeId!= null ? this.tagTypes[this.selectedTagTypeId].title : "No title";
+      getModalTitle(): String {
+          return this.selectedTagTypeId > 0 ? this.tagTypes[this.selectedTagTypeId].title : "No title";
       },
 
-      getSkills: function() {
-          return !!this.tags ? this.tags.filter((el: { tag_type_id: Number }) => el.tag_type_id == 1) : {};
+      getSkills(): Tags {
+          return !!this.tags ? this.tags.filter((el: Tag) => el.tag_type_id == 1) : {} as Tags;
       },
-      getExperiences: function() {
-          return !!this.tags ? this.tags.filter((el: { tag_type_id: Number }) => el.tag_type_id == 2) : {};
+      getExperiences(): Tags {
+          return !!this.tags ? this.tags.filter((el: Tag) => el.tag_type_id == 2) : {} as Tags;
       },
   },
   mounted () {
@@ -85,12 +83,12 @@ export default Vue.extend({
         this.tags.push(tag);
 
       this.editIndex = null;
-      this.tag = {};
+      this.tag = {} as Tag
    })
   },
   
   methods: {
-    onTagAdd(tagTypeId) {
+    onTagAdd(tagTypeId: number) {
         this.selectedTagTypeId = tagTypeId;
         this.showModal = true;
     },

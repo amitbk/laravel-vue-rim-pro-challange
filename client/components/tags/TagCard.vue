@@ -30,8 +30,8 @@
 <script lang="ts">
 import { PropType } from '@nuxtjs/composition-api'
 import Vue from 'vue'
-import { Tags } from '@/client/types/api'
-import { Tag } from '@/client/types/api'
+import { Tags } from '../../types/api'
+import { Tag } from '../../types/api'
 import TagAdd from './TagAdd.vue'
 import TagCardSkeleton from './TagCardSkeleton.vue'
 export default Vue.extend({
@@ -65,10 +65,10 @@ export default Vue.extend({
       this.$emit('tag-add', this.tagType.index)
     },
 
-    onEditClick(index: Number, tag: Tag) {
+    onEditClick(index: number, tag: Tag) {
       this.$emit('tag-edit', {index, tag})
     },
-    onDeleteClick(index: Number, tag: Tag) {
+    onDeleteClick(index: number, tag: Tag) {
       this.$emit('tag-delete', {index, tag})
     },
   }

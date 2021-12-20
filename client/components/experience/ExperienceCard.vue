@@ -18,7 +18,8 @@
             <icon-clock class="w-5 h-5" />
           </div>
           <div class="flex-1 text-gray-500 truncate">
-            2019 - 2021
+            Start: {{ experience.dat_start }} <br>
+            End: {{ experience.date_end }}
           </div>
         </div>
       </div>
@@ -55,7 +56,7 @@
 <script lang="ts">
 import { PropType } from '@nuxtjs/composition-api'
 import Vue from 'vue'
-import { Experience } from '@/client/types/api'
+import { Experience } from '../../types/api'
 export default Vue.extend({
   props: {
     experience: {
